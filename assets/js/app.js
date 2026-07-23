@@ -18,18 +18,7 @@ const spinner = document.getElementById('spinner');
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+let userArr= []
 
 
 
@@ -66,4 +55,63 @@ async function makeApiCall(methodName,url,body=null){
   }
 
 
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+async function fetchUsers(){ 
+      
+     spinner.classList.remove('d-none');
+     
+    
+        try{ 
+         let res = await makeApiCall('GET',userUrl,null);
+               userArr =res
+            createUsers(userArr);
+        
+
+          }catch(err){ 
+           
+              snackbar(err,'error');
+
+           }finally{ 
+              spinner.classList.add('d-none');
+          }
+}
+
+
+
+
+
+fetchUsers();
+
+
+function createUsers(arr){
+     let res =" "; 
+
+     arr.forEach(ele=>{ 
+           res +=` <tr id="${ele.id}">
+                     <td></td>
+                     <td>${ele.name}</td>
+                     <td>${ele.username}</td>
+                     <td>${ele.email}</td>
+                     <td>${ele.contact}</td>
+                     <td><button class="btn btn-block btn-outline-primary"><i class="fa-solid fa-pen-to-square"></i></button></td>
+                     <td><button class="btn btn-block btn-outline-primary"><i class="fa-solid fa-trash"></i></button></td>
+                   </tr>`
+     });
+    userContainer.innerHTML =res; 
 }
